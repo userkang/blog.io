@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>zepto源码阅读第一天 | userkang&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zepto github地址：git@github.com:madrobby/zepto.git 看到目录结构后，找到 src/zepto.js 1、代码结构： 1234var Zepto = (function() &amp;#123;...&amp;#125;)()window.Zepto = Zeptowindow.$ === undefined &amp;amp;&amp;amp; (window.$ = Zepto)">
+<meta name="keywords" content="userkang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zepto源码阅读第一天">
+<meta property="og:url" content="http://userkang.com/2019/01/02/zepto源码阅读第一天/index.html">
+<meta property="og:site_name" content="userkang&#39;s blog">
+<meta property="og:description" content="zepto github地址：git@github.com:madrobby/zepto.git 看到目录结构后，找到 src/zepto.js 1、代码结构： 1234var Zepto = (function() &amp;#123;...&amp;#125;)()window.Zepto = Zeptowindow.$ === undefined &amp;amp;&amp;amp; (window.$ = Zepto)">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-02T04:28:40.768Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zepto源码阅读第一天">
+<meta name="twitter:description" content="zepto github地址：git@github.com:madrobby/zepto.git 看到目录结构后，找到 src/zepto.js 1、代码结构： 1234var Zepto = (function() &amp;#123;...&amp;#125;)()window.Zepto = Zeptowindow.$ === undefined &amp;amp;&amp;amp; (window.$ = Zepto)">
+  
+    <link rel="alternate" href="/atom.xml" title="userkang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">userkang&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">less is more</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://userkang.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-zepto源码阅读第一天" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/02/zepto源码阅读第一天/" class="article-date">
+  <time datetime="2019-01-02T04:24:58.000Z" itemprop="datePublished">2019-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      zepto源码阅读第一天
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="zepto">zepto</a> github地址：<a href="git@github.com:madrobby/zepto.git">git@github.com:madrobby/zepto.git</a></p>
+<p>看到目录结构后，找到 src/zepto.js</p>
+<p>1、代码结构：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Zepto = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.Zepto = Zepto</span><br><span class="line"><span class="built_in">window</span>.$ === <span class="literal">undefined</span> &amp;&amp; (<span class="built_in">window</span>.$ = Zepto)</span><br></pre></td></tr></table></figure>
+<p>这里使用 IDE 折叠代码可以清楚的看到整个代码结构。如果项目中 $ 符被占用，可以使用Zepto来调用。</p>
+<p>2、代码入口：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> zepto.init(selector, context)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>平时项目中都是通过 $(xx) 的方式调用的。看来这里是调用了 init 函数，那再看看init函数里是什么吧？</p>
+<p>3、zepto.init 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">zepto.init = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> dom</span><br><span class="line">  <span class="comment">// 如果selector为空，就返回一个空的Zepto对象</span></span><br><span class="line">  <span class="keyword">if</span> (!selector) <span class="keyword">return</span> zepto.Z()</span><br><span class="line">  <span class="comment">// 判断selector是否是字符串</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> selector == <span class="string">'string'</span>) &#123;</span><br><span class="line"> <span class="comment">// 过滤空白字符</span></span><br><span class="line">    selector = selector.trim()</span><br><span class="line">    <span class="comment">// 如果是一个html片段，就创建一个Dom节点</span></span><br><span class="line">    <span class="comment">// 注意: 在谷歌21和火狐15版本的浏览器中，如果html片断不是以'&lt;'开始会报异常</span></span><br><span class="line">    <span class="keyword">if</span> (selector[<span class="number">0</span>] == <span class="string">'&lt;'</span> &amp;&amp; fragmentRE.test(selector))</span><br><span class="line">      dom = zepto.fragment(selector, <span class="built_in">RegExp</span>.$<span class="number">1</span>, context), selector = <span class="literal">null</span></span><br><span class="line">    <span class="comment">// 如果传了上下文的参数，会先创建一个上下文集合，然后在这个集合内去寻找selector节点</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (context !== <span class="literal">undefined</span>) <span class="keyword">return</span> $(context).find(selector)</span><br><span class="line">    <span class="comment">// 如果是CSS选择器，直接调用原生querySelectorAll去寻找节点(当然qsa方法里面做了很多东西，先这样理解)</span></span><br><span class="line">    <span class="keyword">else</span> dom = zepto.qsa(<span class="built_in">document</span>, selector)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 如果传入的是一个方法，则调用Dom ready的方法</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (isFunction(selector)) <span class="keyword">return</span> $(<span class="built_in">document</span>).ready(selector)</span><br><span class="line">  <span class="comment">// 如果本身传入的就是一个Zepto对象，就直接返回这个对象</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (zepto.isZ(selector)) <span class="keyword">return</span> selector</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果传入的selector是一个节点数组，就格式化下数组，清除里面的空对象</span></span><br><span class="line">    <span class="keyword">if</span> (isArray(selector)) dom = compact(selector)</span><br><span class="line">    <span class="comment">// 如果传入是一个对象，就把它包成一个数组</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (isObject(selector))</span><br><span class="line">      dom = [selector], selector = <span class="literal">null</span></span><br><span class="line">    <span class="comment">// 下面的操作和上面的类似，就不多说了</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fragmentRE.test(selector))</span><br><span class="line">      dom = zepto.fragment(selector.trim(), <span class="built_in">RegExp</span>.$<span class="number">1</span>, context), selector = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (context !== <span class="literal">undefined</span>) <span class="keyword">return</span> $(context).find(selector)</span><br><span class="line">    <span class="keyword">else</span> dom = zepto.qsa(<span class="built_in">document</span>, selector)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 最后将生成的Dom和选择器传入Z函数</span></span><br><span class="line">  <span class="keyword">return</span> zepto.Z(dom, selector)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来就要看看 zepto.Z 函数里面发生了什么。期待。</p>
+<p>在 zepto.init 函数中用很多工具方法，都很有意思。比如 fragment、qsa、compact 等。以后再细细展开，今天就先到这啦。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://userkang.com/2019/01/02/zepto源码阅读第一天/" data-id="cjqeom3an0001s04dlfh9mj1o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/28/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/02/zepto源码阅读第一天/">zepto源码阅读第一天</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/28/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 userkang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
